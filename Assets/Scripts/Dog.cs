@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.AI;
+ 
 
 public class Dog : MonoBehaviour
 {
@@ -37,9 +37,11 @@ public class Dog : MonoBehaviour
         DOTween.Init();
     }
 
-    void Start()
-    { 
-        SetAnimTrigger(1);
+    private void Start()
+    {
+         
+        
+         
     }
 
 
@@ -48,18 +50,23 @@ public class Dog : MonoBehaviour
         if (dogCanMove)
         {
             MoveDog();
+            
+        }
+        else
+        {
+            StopAllCoroutines();
         }
     }
 
     private void AttackObstacle()
     {
-        dogParentPathMovement.canMove = false;
+        //dogParentPathMovement.canMove = false;
         dogAnim.SetBool("isAttacking",true);
     }
 
     private void AnimBoolChanger()
     {
-        dogAnim.SetBool("isAttacking",false);
+        //dogAnim.SetBool("isAttacking",false);
         dogAnim.SetBool("run",true);
         dogParentPathMovement.canMove = true;
     }
@@ -97,9 +104,11 @@ public class Dog : MonoBehaviour
     }
     
     //This will be called from the level manager script according to the level.
-    public void SetAnimTrigger(int id)
+    public void SetAnimTrigger()
     {
-        dogAnim.SetTrigger("Level" + id);
+        //dogAnim.SetTrigger("Level" + id);
+        dogAnim.SetTrigger("Level1");
+        transform.DOLookAt((transform.forward), 0.1f, AxisConstraint.Y);
     }
 
     private void DogScareHandler()
@@ -141,4 +150,7 @@ public class Dog : MonoBehaviour
             AnimBoolChanger();
         }
     }
+
+
+ 
 }

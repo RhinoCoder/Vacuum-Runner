@@ -1,4 +1,5 @@
-﻿using UnityEngine ;
+﻿using System;
+using UnityEngine ;
 using UnityEngine.UI ;
 
 public class LevelProgressUI : MonoBehaviour {
@@ -20,7 +21,11 @@ public class LevelProgressUI : MonoBehaviour {
    private float fullDistance ;
 
 
-
+   private void Awake()
+   {
+      endLinePosition = GameObject.FindGameObjectWithTag("Finish").transform.position;
+      Debug.Log(endLinePosition);
+   }
 
    private void Start () {
       fullDistance = GetDistance () ;

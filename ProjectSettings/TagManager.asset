@@ -11,6 +11,7 @@ TagManager:
   - Dog
   - gold
   - wall
+  - objToUp
   layers:
   - Default
   - TransparentFX

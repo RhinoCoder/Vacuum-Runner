@@ -113,16 +113,16 @@ QualitySettings:
     asyncUploadTimeSlice: 2
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
-    resolutionScalingFixedDPIFactor: 1
+    resolutionScalingFixedDPIFactor: 0.75
     customRenderPipeline: {fileID: 11400000, guid: 7b7fd9122c28c4d15b667c7040e3b3fd,
       type: 2}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
-    Android: 1
+    Android: 0
     CloudRendering: 2
-    Lumin: 2
     GameCoreScarlett: 2
     GameCoreXboxOne: 2
+    Lumin: 2
     Nintendo Switch: 2
     PS4: 2
     PS5: 2
@@ -132,5 +132,5 @@ QualitySettings:
     WebGL: 1
     Windows Store Apps: 2
     XboxOne: 2
-    iPhone: 1
+    iPhone: 0
     tvOS: 1

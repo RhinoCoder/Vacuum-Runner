@@ -29,8 +29,8 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Dog"))
         {
-                    var dir = (transform.position - other.transform.position).normalized;
-            obsRb.AddForce(-dir*65f,ForceMode.Impulse);
+            var dir = (transform.position - other.transform.position).normalized;
+            obsRb.AddForce(-dir*150f,ForceMode.Impulse);
             
         }
 
