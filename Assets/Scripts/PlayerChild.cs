@@ -32,7 +32,13 @@ public class PlayerChild : MonoBehaviour
     [SerializeField] private Upgrade upgrade;
     [SerializeField] private Image lifeTimeSprite;
     [SerializeField] private GameObject objMove;
-
+    [SerializeField] private AudioSource winSound;
+    [SerializeField] private AudioSource failSound;
+    
+    
+    
+    
+    
     private void Awake()
     {
         parentRb = GetComponent<Rigidbody>();
@@ -136,6 +142,7 @@ public class PlayerChild : MonoBehaviour
             foreach (var ps in other.gameObject.GetComponentsInChildren<ParticleSystem>()){ps.Play();}
             levelManagement.ScriptsTerminator();
             upgrade.NextLevelButt();
+            winSound.Play();
             Debug.Log("Level is finished Here by winning, go to next Level.");
             
         }
@@ -188,6 +195,7 @@ public class PlayerChild : MonoBehaviour
             levelManagement.ScriptsTerminator();
             this.enabled = false;
             player.enabled = false;
+            failSound.Play();
             Debug.Log("The game is over for player.,");
             
         }
