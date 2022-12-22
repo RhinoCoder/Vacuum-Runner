@@ -1,11 +1,4 @@
-﻿//////////////////////////////////////////////////////
-// MK Toon Editor Color RGB Drawer        			//
-//					                                //
-// Created by Michael Kremmel                       //
-// www.michaelkremmel.de                            //
-// Copyright © 2021 All rights reserved.            //
-//////////////////////////////////////////////////////
-
+﻿ 
 #if UNITY_EDITOR
 using UnityEngine;
 using UnityEditor;

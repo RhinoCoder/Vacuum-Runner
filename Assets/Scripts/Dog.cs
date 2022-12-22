@@ -19,19 +19,20 @@ public class Dog : MonoBehaviour
     
     //Dog Components.
     [SerializeField] private Rigidbody dogRb;
-    [SerializeField] private Animator dogAnim;
+    public Animator dogAnim;
     [SerializeField] private DogParentPathMovement dogParentPathMovement;
     
     
     [SerializeField] private GameObject fur;
     [SerializeField] private Transform spawnTransform;
     [SerializeField] private ParticleSystem exlMarkPart;
-    [SerializeField] private AudioSource woofSound;    
+    [SerializeField] private AudioSource woofSound;
+    [SerializeField] private ParticleSystem twinkleStars;
     
-    
-    private float timer = 0;
+    private float timer = 0f;
+    private float ts = 0f;
 
-
+    public bool canDogContinue;
     private void Awake()
     {
         DOTween.Init();
@@ -39,7 +40,6 @@ public class Dog : MonoBehaviour
 
     private void Start()
     {
-         
         
          
     }
@@ -47,22 +47,20 @@ public class Dog : MonoBehaviour
 
     private void Update()
     {
-        if (dogCanMove)
+        
+        if (dogParentPathMovement.canMove && dogCanMove  )
         {
             MoveDog();
-            
         }
-        else
-        {
-            StopAllCoroutines();
-        }
+
+        
     }
 
-    private void AttackObstacle()
-    {
-        //dogParentPathMovement.canMove = false;
-        dogAnim.SetBool("isAttacking",true);
-    }
+
+    
+    
+    
+   
 
     private void AnimBoolChanger()
     {
@@ -79,14 +77,13 @@ public class Dog : MonoBehaviour
         randY = UnityEngine.Random.Range(0, 90f);
         randZ = UnityEngine.Random.Range(0, 120f);
         
-        randScaleFactor = UnityEngine.Random.Range(0.15f, 1.5f);
+        randScaleFactor = UnityEngine.Random.Range(0.75f, 2.85f);
 
         randPosX = UnityEngine.Random.Range(-0.1f, 0.3f);
         randPosZ = UnityEngine.Random.Range(-0.1f, 0.3f);
         
         GameObject newFur = Instantiate(fur, spawnTransform.position + new Vector3(randPosX,0.35f,randPosZ), Quaternion.Euler(randX,randY,randZ));
-        newFur.transform.DOScale(randScaleFactor, 0.1f);
-        Debug.Log("Fur Emmitted..");
+        newFur.transform.DOScale(randScaleFactor, 0.1f); 
     }
 
 
@@ -96,7 +93,7 @@ public class Dog : MonoBehaviour
        
         timer += Time.deltaTime;
 
-        if (timer > 0.01f)
+        if (timer > 0.06f)
         {
             FurCreator();
             timer = 0;
@@ -125,7 +122,6 @@ public class Dog : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Finish"))
         {
-            
             Destroy(dogParentPathMovement.gameObject,0.3f);
             Debug.Log("Köpek yok edildi.");
         }
@@ -142,13 +138,35 @@ public class Dog : MonoBehaviour
 
         if (other.gameObject.CompareTag("Obstacle"))
         {
-            AttackObstacle();
+         
+            twinkleStars.Play();
+            dogParentPathMovement.speed = 1.5f;
+            dogAnim.speed = 0.5f;
             other.gameObject.tag = "Untagged";
         }
         else
         {
             AnimBoolChanger();
         }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(other.gameObject.CompareTag("Obstacle"))
+        {
+         
+            ts += Time.deltaTime;
+        
+            if (ts >= 0.2f)
+            {
+                dogParentPathMovement.speed = 6f;
+                dogAnim.speed = 1.05f;
+                ts = 0f;
+                twinkleStars.Stop();
+            }   
+            
+        }
+         
     }
 
 

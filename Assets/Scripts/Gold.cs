@@ -20,14 +20,11 @@ public class Gold : MonoBehaviour
 
     void FixedUpdate()
     {
-
-       transform.Rotate(Vector3.up*Time.deltaTime*rotSpeed);
-        
+        transform.Rotate(Vector3.up*Time.deltaTime*rotSpeed);
     }
 
     public void SoundCaller()
     {
-        
         collectSound.Play();   
     }
     

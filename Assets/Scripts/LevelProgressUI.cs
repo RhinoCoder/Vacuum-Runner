@@ -24,7 +24,7 @@ public class LevelProgressUI : MonoBehaviour {
    private void Awake()
    {
       endLinePosition = GameObject.FindGameObjectWithTag("Finish").transform.position;
-      Debug.Log(endLinePosition);
+      
    }
 
    private void Start () {
@@ -55,7 +55,6 @@ public class LevelProgressUI : MonoBehaviour {
       if (playerTransform.position.z <= endLinePosition.z) {
          float newDistance = GetDistance () ;
          float progressValue = Mathf.InverseLerp (fullDistance, 0f, newDistance) ;
-
          UpdateProgressFill (progressValue) ;
       }
    }

@@ -15,26 +15,13 @@ public class Obstacle : MonoBehaviour
         obsRb = GetComponent<Rigidbody>();
     }
 
-
-    private void BackForcerEmerger()
-    {
-        
-        
-        
-    }
-
-
-
+    
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("Dog"))
         {
             var dir = (transform.position - other.transform.position).normalized;
             obsRb.AddForce(-dir*150f,ForceMode.Impulse);
-            
         }
-
-      
-        
     }
 }

@@ -12,7 +12,6 @@ public class Jetpack : MonoBehaviour
 
     private void OnEnable()
     {
-        
         foreach (var jp in jetPackParticles)
         {
             jp.Play();

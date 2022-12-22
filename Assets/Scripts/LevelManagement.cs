@@ -12,7 +12,7 @@ public class LevelManagement : MonoBehaviour
     [SerializeField] private LevelProgressUI levelProgressUI;
     [SerializeField] private PlayerChild playerChild;
     [SerializeField] private Player player;
-    [SerializeField] private CameraFollow cameraFollow;
+    [SerializeField] private CameraParent cameraParent;
     [SerializeField] private Upgrade upgrade;
     
     
@@ -28,17 +28,16 @@ public class LevelManagement : MonoBehaviour
     void Awake()
     {
         
-        //PlayerPrefs.DeleteAll();
-        //PlayerPrefs.SetInt("level", 0);
+         
         level = PlayerPrefs.GetInt("level");
         levelProgressUI.SetLevelTexts((level + 1));
         level = level % 6;
         levels[level].SetActive(true);
         dogs = levels[level].gameObject.GetComponentsInChildren<Dog>().ToList();
-        cameraFollow.levelIndex = level;
+        cameraParent.levelIndex = level;
         player.pathCreator = levels[level].gameObject.GetComponentInChildren<PathCreator>();
         dogParentPathMovements = levels[level].gameObject.GetComponentsInChildren<DogParentPathMovement>().ToList();
-        Debug.Log("Current level clamp case." + level);
+      
     }
     
     
@@ -47,8 +46,10 @@ public class LevelManagement : MonoBehaviour
         levelProgressUI.enabled = true;
         playerChild.enabled = true;
         player.enabled = true;
-        cameraFollow.enabled = true;
-        
+        player.canMove = true;
+        cameraParent.MoveCamera();
+        player.speed = 4.5f;
+        cameraParent.speed = 4.5f;
         foreach (var dgs in dogParentPathMovements)
         {
             dgs.enabled = true;
@@ -63,24 +64,26 @@ public class LevelManagement : MonoBehaviour
             
         }
         
-        Debug.Log("Scripts are open.");
+       
 
     }
 
     public void ScriptsTerminator()
     {
+        
         levelProgressUI.enabled = false;
         playerChild.enabled = false;
         playerChild.vacuumEmitEffects.Stop();
         playerChild.emitParticles.Stop();
         upgrade.jetPack.GetComponent<Animator>().enabled = false;
+        playerChild.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         player.enabled = false;
-        cameraFollow.enabled = false;
+        cameraParent.enabled = false;
+      
         
         foreach (var dgs in dogParentPathMovements)
         {
             if (dgs){dgs.enabled = false;}
-           
         }
         
         foreach (var dg in dogs)
@@ -92,11 +95,8 @@ public class LevelManagement : MonoBehaviour
                 dg.transform.GetComponent<Animator>().enabled = false;
                 dg.enabled = false;
             }
-       
         }
-         
         StopAllCoroutines();
-        Debug.Log("Scripts are closed.");
     }
 
     
